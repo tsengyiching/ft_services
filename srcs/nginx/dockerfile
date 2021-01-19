@@ -1,0 +1,29 @@
+FROM alpine:3.12
+EXPOSE 80 443
+# Install Nginx package
+RUN apk -U update --no-cache
+RUN apk add nginx --no-cache
+RUN apk add openssl --no-cache
+
+# Create new user and group 'www' for nginx
+RUN adduser -D -g 'www' www
+
+# Create a directory for html files
+RUN mkdir /www
+RUN chown -R www:www /var/lib/nginx
+RUN chown -R www:www /www
+
+# Generate ssl certificate
+RUN openssl genrsa -des3 -passout pass:1234 -out server.pass.key 2048 && \
+    openssl rsa -passin pass:1234 -in server.pass.key -out server.key && \
+    rm server.pass.key && \
+    openssl req -new -key server.key -out server.csr \
+        -subj "/C=FR/ST=ILEDEFRANCE/L=PARIS/O=OrgName/OU=IT Department/CN=yictseng" && \
+    openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+
+COPY srcs/nginx.conf /etc/nginx/nginx.conf
+COPY srcs/index.html /www
+COPY srcs/setup.sh /
+RUN chmod +x /setup.sh
+RUN mkdir -p /run/nginx
+ENTRYPOINT ["/bin/sh", "/setup.sh"]
