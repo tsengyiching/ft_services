@@ -23,7 +23,7 @@ kubectl create secret generic -n metallb-system memberlist  --from-literal=secre
 
 # Get minikube ip and apply it with metalLB 
 export	MinikubeIP=$(minikube ip)
-echo "      - $MinikubeIP-$MinikubeIP" >> srcs/metallb.yaml
+echo "      - $MinikubeIP-$MinikubeIP" >> srcs/metalLB.yaml
 
 kubectl apply -f srcs/metalLB.yaml
 kubectl apply -f srcs/nginx.yaml
