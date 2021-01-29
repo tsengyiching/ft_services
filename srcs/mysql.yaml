@@ -18,6 +18,13 @@ spec:
         image: my_mysql
         ports:
         - containerPort: 3306
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: var/lib/mysql
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pvc
 ---
 apiVersion: v1
 kind: Service
