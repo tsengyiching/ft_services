@@ -27,4 +27,5 @@ echo "      - $MinikubeIP-$MinikubeIP" >> srcs/metalLB.yaml
 
 kubectl apply -f srcs/metalLB.yaml
 kubectl apply -f srcs/nginx.yaml
+kubectl apply -f srcs/volume.yaml
 kubectl apply -f srcs/mysql.yaml
