@@ -13,6 +13,7 @@ eval $(minikube docker-env)
 # Build images
 docker build -t my_nginx srcs/nginx
 docker build -t my_mysql srcs/mysql
+docker build -t my_wordpress srcs/wordpress
 
 # Apply the MetalLB manifest yaml files, create controller and speaker
 # Namespace is a virtual cluster supported by K8s
@@ -27,5 +28,5 @@ echo "      - $MinikubeIP-$MinikubeIP" >> srcs/metalLB.yaml
 
 kubectl apply -f srcs/metalLB.yaml
 kubectl apply -f srcs/nginx.yaml
-kubectl apply -f srcs/volume.yaml
 kubectl apply -f srcs/mysql.yaml
+kubectl apply -f srcs/wordpress.yaml
