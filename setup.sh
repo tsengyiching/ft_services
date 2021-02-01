@@ -15,6 +15,8 @@ docker build -t my_nginx srcs/nginx
 docker build -t my_mysql srcs/mysql
 docker build -t my_wordpress srcs/wordpress
 docker build -t my_phpmyadmin srcs/phpmyadmin
+docker build -t my_influxdb srcs/influxdb
+docker build -t my_grafana srcs/grafana
 
 # Apply the MetalLB manifest yaml files, create controller and speaker
 # Namespace is a virtual cluster supported by K8s
@@ -28,7 +30,10 @@ export	MinikubeIP=$(minikube ip)
 echo "      - $MinikubeIP-$MinikubeIP" >> srcs/metalLB.yaml
 
 kubectl apply -f srcs/metalLB.yaml
+#kubectl apply -f srcs/secrets.yaml
 kubectl apply -f srcs/nginx.yaml
 kubectl apply -f srcs/mysql.yaml
 kubectl apply -f srcs/wordpress.yaml
 kubectl apply -f srcs/phpmyadmin.yaml
+kubectl apply -f srcs/influxdb.yaml
+kubectl apply -f srcs/grafana.yaml
