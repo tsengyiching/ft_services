@@ -1,5 +1,4 @@
 FROM alpine:3.12
-MAINTAINER Fabien Buthod-Garcon
 
 RUN apk add vsftpd openrc openssl
 

@@ -29,11 +29,15 @@ kubectl create secret generic -n metallb-system memberlist  --from-literal=secre
 export	MinikubeIP=$(minikube ip)
 echo "      - $MinikubeIP-$MinikubeIP" >> srcs/metalLB.yaml
 
+echo "vsftpd -opasv_min_port=21000 -opasv_max_port=21010 -opasv_address=$MinikubeIP /etc/vsftpd/vsftpd.conf" >> srcs/ftps/srcs/start_ftp.sh
+docker build -t my_ftps srcs/ftps
+
 kubectl apply -f srcs/metalLB.yaml
 #kubectl apply -f srcs/secrets.yaml
 kubectl apply -f srcs/nginx.yaml
 kubectl apply -f srcs/mysql.yaml
 kubectl apply -f srcs/wordpress.yaml
 kubectl apply -f srcs/phpmyadmin.yaml
+kubectl apply -f srcs/ftps.yaml
 kubectl apply -f srcs/influxdb.yaml
 kubectl apply -f srcs/grafana.yaml
