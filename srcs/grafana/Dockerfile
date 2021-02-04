@@ -1,5 +1,6 @@
 FROM alpine:3.12
-MAINTAINER Fabien Buthod-Garcon
+
+EXPOSE 3000
 
 RUN apk add --no-cache su-exec bash curl
 RUN apk add libc6-compat gcompat
@@ -16,7 +17,5 @@ RUN tar -C . -xzf grafana-7.3.6.linux-amd64.tar.gz && \
     mv grafana-7.3.6 grafana
 
 COPY srcs/grafana.db /var/grafana
-
-EXPOSE 3000
 
 ENTRYPOINT ["/bin/start_grafana.sh"]
