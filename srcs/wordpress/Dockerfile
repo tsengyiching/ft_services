@@ -17,7 +17,6 @@ RUN wget https://fr.wordpress.org/wordpress-latest-fr_FR.zip && \
     chmod -R -wx,u+rwX,g+rX,o+rX /www/wordpress
 
 COPY srcs/setup.sh /
-
+COPY srcs/wp-config.php /www/wordpress/
 RUN chmod +x /setup.sh
-
 ENTRYPOINT ["/bin/sh", "/setup.sh"]
