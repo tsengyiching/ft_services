@@ -13,7 +13,7 @@ RUN mkdir -p /run/mysqld
 
 # Copy configuration
 COPY ./srcs/my.cnf ./etc/my.cnf.d/
-COPY ./srcs/setup.sh /
+COPY ./srcs/start_mysql.sh /
 
 RUN chmod 0444 /etc/my.cnf.d/my.cnf
 
