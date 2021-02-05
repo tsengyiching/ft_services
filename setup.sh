@@ -7,7 +7,7 @@ if [ "$OS" == "Darwin" ]; then
 	export	MinikubeIP=$(minikube ip)
 else
 	minikube delete
-	minikube start --driver=docker
+	minikube start --vm-driver=docker
 	export	MinikubeIP="$(kubectl get node -o=custom-columns='DATA:status.addresses[0].address' | sed -n 2p)"
 fi
 
