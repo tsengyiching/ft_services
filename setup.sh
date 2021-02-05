@@ -1,11 +1,19 @@
 #!/bin/sh
+OS=`uname -s`
+# Start Minikube and get ip address
+if [ "$OS" == "Darwin" ]; then
+	minikube delete
+	minikube start --driver=hyperkit
+	export	MinikubeIP=$(minikube ip)
+else
+	minikube delete
+	minikube start --driver=docker
+	export	MinikubeIP="$(kubectl get node -o=custom-columns='DATA:status.addresses[0].address' | sed -n 2p)"
+fi
 
-# Start minikube
-# --v=7 --alsologtostderr is for debugging mode
-# --driver=virtualbox for school mac
-# --driver=docker on vm
-minikube delete
-minikube start --driver=hyperkit
+# Add MinikubeIP in metalLB yaml file and ftps setup file 
+echo "      - $MinikubeIP-$MinikubeIP" >> srcs/metalLB.yaml
+echo "vsftpd -opasv_min_port=21000 -opasv_max_port=21010 -opasv_address=$MinikubeIP /etc/vsftpd/vsftpd.conf" >> srcs/ftps/srcs/start_ftp.sh
 
 # Use the docker daemon from minikube
 eval $(minikube docker-env)
@@ -15,6 +23,7 @@ docker build -t my_nginx srcs/nginx
 docker build -t my_mysql srcs/mysql
 docker build -t my_wordpress srcs/wordpress
 docker build -t my_phpmyadmin srcs/phpmyadmin
+docker build -t my_ftps srcs/ftps
 docker build -t my_influxdb srcs/influxdb
 docker build -t my_grafana srcs/grafana
 
@@ -25,15 +34,8 @@ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manife
 # Create the MetalLB scret memberlist
 kubectl create secret generic -n metallb-system memberlist  --from-literal=secretkey="$(openssl rand -base64 128)"
 
-# Get minikube ip and apply it with metalLB 
-export	MinikubeIP=$(minikube ip)
-echo "      - $MinikubeIP-$MinikubeIP" >> srcs/metalLB.yaml
-
-echo "vsftpd -opasv_min_port=21000 -opasv_max_port=21010 -opasv_address=$MinikubeIP /etc/vsftpd/vsftpd.conf" >> srcs/ftps/srcs/start_ftp.sh
-docker build -t my_ftps srcs/ftps
-
+# Deploy services
 kubectl apply -f srcs/metalLB.yaml
-#kubectl apply -f srcs/secrets.yaml
 kubectl apply -f srcs/nginx.yaml
 kubectl apply -f srcs/mysql.yaml
 kubectl apply -f srcs/wordpress.yaml

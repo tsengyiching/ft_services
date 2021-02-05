@@ -1,5 +1,7 @@
 FROM alpine:3.12
 
+EXPOSE 8086
+
 RUN apk add --no-cache su-exec bash
 
 COPY srcs/influxdb.conf /bin/influxdb.conf
@@ -14,9 +16,7 @@ ADD https://dl.influxdata.com/influxdb/releases/influxdb2-2.0.3_linux_amd64.tar.
 RUN tar -C . -xzf influxdb2-2.0.3_linux_amd64.tar.gz && \
     chmod +x influxdb2-2.0.3_linux_amd64 && \
     mv influxdb2-2.0.3_linux_amd64 influxdb && \
-    rm -rf *.tar.gz* influxdb-*/
-
-EXPOSE 8086
+    rm -rf *.tar.gz* influxdb-*/ 
 
 VOLUME [ "/var/influxdb" ]
 

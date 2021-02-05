@@ -10,8 +10,8 @@ RUN apk add php7 php7-fpm php7-opcache \
 php7-gd php7-mysqli php7-zlib php7-curl \
 php7-mbstring php7-json php7-session
 
-RUN wget https://fr.wordpress.org/wordpress-latest-fr_FR.zip && \
-    unzip wordpress-latest-fr_FR.zip -d /www && \
+RUN wget https://wordpress.org/wordpress-5.6.1.zip && \
+    unzip wordpress-5.6.1.zip -d /www && \
     adduser -D -g 'www' www && \
     chown www:www /www/wordpress -R && \
     chmod -R -wx,u+rwX,g+rX,o+rX /www/wordpress
