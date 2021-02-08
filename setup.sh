@@ -15,7 +15,7 @@ fi
 cat srcs/metalLB.yaml.example > srcs/metalLB.yaml 
 echo "      - $MinikubeIP-$MinikubeIP" >> srcs/metalLB.yaml
 cat srcs/ftps/srcs/start_ftps.sh.example > srcs/ftps/srcs/start_ftps.sh
-echo "vsftpd -opasv_min_port=21000 -opasv_max_port=21010 -opasv_address=$MinikubeIP /etc/vsftpd/vsftpd.conf" >> srcs/ftps/srcs/start_ftp.sh
+echo "vsftpd -opasv_min_port=21000 -opasv_max_port=21010 -opasv_address=$MinikubeIP /etc/vsftpd/vsftpd.conf" >> srcs/ftps/srcs/start_ftps.sh
 
 # Use the docker daemon from minikube
 eval $(minikube docker-env)
@@ -45,3 +45,16 @@ kubectl apply -f srcs/phpmyadmin.yaml
 kubectl apply -f srcs/ftps.yaml
 kubectl apply -f srcs/influxdb.yaml
 kubectl apply -f srcs/grafana.yaml
+
+# function clear {
+# 	# Clear modified files
+# 	echo "Clear metalLB.yaml"
+# 	rm srcs/metalLB.yaml
+# 	echo "Clear start_ftps.sh"
+# 	rm srcs/ftps/srcs/start_ftps.sh
+# }
+
+# # $arguments 
+# if [ $1 == "clear" ]; then
+# 	clear;
+# fi
