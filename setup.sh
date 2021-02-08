@@ -24,6 +24,8 @@ echo "vsftpd -opasv_min_port=21000 -opasv_max_port=21010 -opasv_address=$Minikub
 # Use the docker daemon from minikube
 eval $(minikube docker-env)
 
+sh srcs/nginx/srcs/nginx.sh
+
 # Build images
 docker build -t my_nginx srcs/nginx
 docker build -t my_mysql srcs/mysql
@@ -58,7 +60,7 @@ kubectl apply -f srcs/grafana.yaml
 # 	rm srcs/ftps/srcs/start_ftps.sh
 # }
 
-# # $arguments 
+# # $arguments
 # if [ $1 == "clear" ]; then
 # 	clear;
 # fi
