@@ -11,8 +11,10 @@ else
 	export	MinikubeIP="$(kubectl get node -o=custom-columns='DATA:status.addresses[0].address' | sed -n 2p)"
 fi
 
-# Add MinikubeIP in metalLB yaml file and ftps setup file 
+# Add MinikubeIP in metalLB yaml file and ftps setup file
+cat srcs/metalLB.yaml.example > srcs/metalLB.yaml 
 echo "      - $MinikubeIP-$MinikubeIP" >> srcs/metalLB.yaml
+cat srcs/ftps/srcs/start_ftps.sh.example > srcs/ftps/srcs/start_ftps.sh
 echo "vsftpd -opasv_min_port=21000 -opasv_max_port=21010 -opasv_address=$MinikubeIP /etc/vsftpd/vsftpd.conf" >> srcs/ftps/srcs/start_ftp.sh
 
 # Use the docker daemon from minikube
