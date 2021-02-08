@@ -1,1 +1,3 @@
 *.DS_Store
+srcs/metalLB.yaml.example
+srcs/ftps/srcs/start_ftps.sh.example
