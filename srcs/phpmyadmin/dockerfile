@@ -4,17 +4,36 @@ EXPOSE 5000
 
 RUN apk update
 RUN apk add --no-cache php7 php7-fpm php7-opcache php7-gd php7-mysqli php7-zlib php7-curl php7-mbstring php7-json php7-session
+RUN apk add nginx --no-cache
+RUN apk add openrc
+RUN apk add openssl --no-cache
+RUN apk add openssh --no-cache
 
-RUN mkdir -p /www/
+RUN adduser -D -g 'www' www
+RUN echo "www:www" | chpasswd
+RUN mkdir /www
+RUN chown -R www:www /var/lib/nginx
+RUN chown -R www:www /www
+
+# Generate ssl certificate
+RUN mkdir -p /run/nginx /www /etc/nginx/ssl
+RUN chown -R www:www /var/lib/nginx && chown -R www:www /www
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/default.key -out /etc/nginx/ssl/default.crt \
+    -subj "/C=FR/ST=France/L=Lyon/O=42Lyon/CN=localhost"
+
 RUN wget https://files.phpmyadmin.net/phpMyAdmin/5.0.4/phpMyAdmin-5.0.4-all-languages.tar.gz
 RUN tar -xvf phpMyAdmin-5.0.4-all-languages.tar.gz
 RUN mv phpMyAdmin-5.0.4-all-languages/* www/.
 
 RUN apk add libc6-compat gcompat
-COPY srcs/setup.sh .
-COPY srcs/config.inc.php www/.
+COPY srcs/nginx.conf /etc/nginx/nginx.conf
+COPY srcs/setup.sh /
+COPY srcs/config.inc.php www/
 
 RUN chmod +x setup.sh
 RUN chmod a-w /www/config.inc.php
+RUN mkdir -p /run/nginx
+RUN chmod +x /setup.sh
+
 
 ENTRYPOINT ["/bin/sh", "setup.sh"]

@@ -13,7 +13,7 @@ spec:
         app: phpmyadmin
     spec:
       containers:
-      - name: nginx
+      - name: phpmyadmin
         imagePullPolicy: Never
         image: my_phpmyadmin
         ports:

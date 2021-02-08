@@ -1,1 +1,2 @@
-php -S 0.0.0.0:5000 -t /www/
+#! /bin/sh
+php-fpm7 && nginx -g "daemon off;"
