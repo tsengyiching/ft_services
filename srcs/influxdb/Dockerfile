@@ -12,7 +12,7 @@ COPY srcs/telegraf.conf /etc/telegraf/
 
 RUN chmod +x /bin/start_influxdb.sh
 
-WORKDIR /var/
+WORKDIR /var/lib/
 
 ADD https://dl.influxdata.com/influxdb/releases/influxdb2-2.0.3_linux_amd64.tar.gz ./
 
@@ -21,6 +21,6 @@ RUN tar -C . -xzf influxdb2-2.0.3_linux_amd64.tar.gz && \
     mv influxdb2-2.0.3_linux_amd64 influxdb && \
     rm -rf *.tar.gz* influxdb-*/ 
 
-VOLUME [ "/var/influxdb" ]
+VOLUME [ "/var/lib/influxdb" ]
 
 ENTRYPOINT ["/bin/start_influxdb.sh"]
