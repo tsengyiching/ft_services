@@ -11,4 +11,4 @@ mysql -u root --execute="CREATE USER 'user'@'%' IDENTIFIED BY 'user'; GRANT ALL 
 # Create Wordpress user "admin", password "admin"
 mysql -u root --execute="CREATE USER 'admin'@'%' IDENTIFIED BY 'admin'; GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' WITH GRANT OPTION; USE wordpress; FLUSH PRIVILEGES;"
 # Keep container running
-sleep infinite
+(telegraf conf &) & sleep infinite
