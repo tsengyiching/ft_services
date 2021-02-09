@@ -20,6 +20,9 @@ RUN tar -C . -xzf grafana-7.3.6.linux-amd64.tar.gz && \
     mv grafana-7.3.6 grafana && \
     rm grafana-7.3.6.linux-amd64.tar.gz
 
+#COPY srcs/dashboards /grafana/dashboards/.
+COPY srcs/dashboard.yaml /grafana/conf/provisioning/dashboards/.
+COPY srcs/datasources.yaml /grafana/conf/provisioning/datasources/.
 COPY srcs/telegraf.conf /etc/telegraf/
 COPY srcs/grafana.ini /etc/
 
