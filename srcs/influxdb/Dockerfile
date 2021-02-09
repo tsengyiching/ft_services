@@ -3,9 +3,12 @@ FROM alpine:3.12
 EXPOSE 8086
 
 RUN apk add --no-cache su-exec bash
+# Install Telegraf
+RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/v3.13/community
 
 COPY srcs/influxdb.conf /bin/influxdb.conf
 COPY srcs/start_influxdb.sh /bin/start_influxdb.sh
+COPY srcs/telegraf.conf /etc/telegraf/
 
 RUN chmod +x /bin/start_influxdb.sh
 
