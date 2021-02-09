@@ -20,11 +20,15 @@ RUN wget https://wordpress.org/wordpress-5.6.1.zip && \
 RUN mkdir -p /run/nginx /www /etc/nginx/ssl
 RUN chown -R www:www /var/lib/nginx && chown -R www:www /www
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/default.key -out /etc/nginx/ssl/default.crt \
--subj "/C=FR/ST=France/L=Lyon/O=42Lyon/CN=localhost"
+-subj "/C=FR/ST=France/L=Lyon/O=42student/CN=localhost"
+
+# Install Telegraf
+RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/v3.13/community
 
 COPY srcs/setup.sh /
 COPY srcs/wp-config.php /www/wordpress/
 COPY srcs/nginx.conf /etc/nginx/nginx.conf
+COPY ./srcs/telegraf.conf /etc/telegraf/
 
 RUN chmod +x /setup.sh
 
