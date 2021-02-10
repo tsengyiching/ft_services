@@ -103,7 +103,7 @@
 			  {
 				"key": "name",
 				"operator": "=",
-				"value": "grafana"
+				"value": "influxdb"
 			  }
 			]
 		  }
@@ -112,7 +112,7 @@
 		"timeFrom": null,
 		"timeRegions": [],
 		"timeShift": null,
-		"title": "Grafana CPU Graph",
+		"title": "Influxdb CPU Graph",
 		"tooltip": {
 		  "shared": true,
 		  "sort": 0,
@@ -162,7 +162,7 @@
 	},
 	"timepicker": {},
 	"timezone": "",
-	"title": "Grafana",
+	"title": "Influxdb",
 	"uid": null,
 	"version": 0
   }
