@@ -7,10 +7,10 @@ RUN apk upgrade --no-cache
 RUN apk add influxdb --no-cache
 RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/v3.13/community
 
-COPY srcs/influxdb.conf /etc/influxdb.conf
-COPY srcs/start_influxdb.sh /bin/start_influxdb.sh
+COPY srcs/influxdb.conf /etc/
 COPY srcs/telegraf.conf /etc/telegraf/
+COPY srcs/start_influxdb.sh /start_influxdb.sh
 
-RUN chmod +x /bin/start_influxdb.sh
+RUN chmod +x /start_influxdb.sh
 
-ENTRYPOINT ["/bin/start_influxdb.sh"] 
+ENTRYPOINT ["/bin/sh", "/start_influxdb.sh"] 
