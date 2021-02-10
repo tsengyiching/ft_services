@@ -4,10 +4,14 @@ OS=`uname -s`
 if [ "$OS" == "Darwin" ]; then
 	minikube delete
 	minikube start --driver=hyperkit
+	minikube addons enable dashboard
+	minikube addons enable metrics-server
 	export	MinikubeIP=$(minikube ip)
 else
 	minikube delete
 	minikube start --vm-driver=docker
+	minikube addons enable dashboard
+	minikube addons enable metrics-server
 	export	MinikubeIP="$(kubectl get node -o=custom-columns='DATA:status.addresses[0].address' | sed -n 2p)"
 fi
 
