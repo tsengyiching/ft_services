@@ -1,2 +1,2 @@
 #! /bin/sh
-nginx -g 'daemon off;'
+(telegraf conf &) & nginx -g 'daemon off;'
