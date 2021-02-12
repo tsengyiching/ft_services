@@ -19,6 +19,96 @@
 	"links": [],
 	"panels": [
 	  {
+		"datasource": "ft_services",
+		"fieldConfig": {
+		  "defaults": {
+			"custom": {},
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			}
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 9,
+		  "w": 24,
+		  "x": 0,
+		  "y": 0
+		},
+		"id": 3,
+		"options": {
+		  "reduceOptions": {
+			"calcs": [
+			  "mean"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "showThresholdLabels": false,
+		  "showThresholdMarkers": true
+		},
+		"pluginVersion": "7.3.6",
+		"targets": [
+		  {
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "null"
+				],
+				"type": "fill"
+			  }
+			],
+			"measurement": "disk",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"used_percent"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "name",
+				"operator": "=",
+				"value": "mysql"
+			  }
+			]
+		  }
+		],
+		"timeFrom": null,
+		"timeShift": null,
+		"title": "MySQL Disk Used %",
+		"type": "gauge"
+	  },
+	  {
 		"aliasColors": {},
 		"bars": false,
 		"dashLength": 10,
@@ -34,9 +124,9 @@
 		"fillGradient": 0,
 		"gridPos": {
 		  "h": 9,
-		  "w": 12,
+		  "w": 24,
 		  "x": 0,
-		  "y": 0
+		  "y": 9
 		},
 		"hiddenSeries": false,
 		"id": 2,

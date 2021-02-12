@@ -15,9 +15,98 @@
 	"editable": true,
 	"gnetId": null,
 	"graphTooltip": 0,
-	"id": null,
 	"links": [],
 	"panels": [
+	  {
+		"datasource": "ft_services",
+		"fieldConfig": {
+		  "defaults": {
+			"custom": {},
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			}
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 8,
+		  "w": 24,
+		  "x": 0,
+		  "y": 0
+		},
+		"id": 4,
+		"options": {
+		  "reduceOptions": {
+			"calcs": [
+			  "mean"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "showThresholdLabels": false,
+		  "showThresholdMarkers": true
+		},
+		"pluginVersion": "7.3.6",
+		"targets": [
+		  {
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "null"
+				],
+				"type": "fill"
+			  }
+			],
+			"measurement": "disk",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"used_percent"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "name",
+				"operator": "=",
+				"value": "phpmyadmin"
+			  }
+			]
+		  }
+		],
+		"timeFrom": null,
+		"timeShift": null,
+		"title": "PhpMyAdmin Disk Used %",
+		"type": "gauge"
+	  },
 	  {
 		"aliasColors": {},
 		"bars": false,
@@ -34,9 +123,9 @@
 		"fillGradient": 0,
 		"gridPos": {
 		  "h": 9,
-		  "w": 12,
+		  "w": 24,
 		  "x": 0,
-		  "y": 0
+		  "y": 8
 		},
 		"hiddenSeries": false,
 		"id": 2,
@@ -112,7 +201,7 @@
 		"timeFrom": null,
 		"timeRegions": [],
 		"timeShift": null,
-		"title": "PhyMyAdmin CPU Graph",
+		"title": "PhpMyAdmin CPU Graph",
 		"tooltip": {
 		  "shared": true,
 		  "sort": 0,
@@ -163,6 +252,6 @@
 	"timepicker": {},
 	"timezone": "",
 	"title": "PhpMyAdmin",
-	"uid": null,
-	"version": 0
+	"uid": "T-PJoKPGk",
+	"version": 1
   }

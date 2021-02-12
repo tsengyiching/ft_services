@@ -15,7 +15,6 @@
 	"editable": true,
 	"gnetId": null,
 	"graphTooltip": 0,
-	"id": 2,
 	"links": [],
 	"panels": [
 	  {
@@ -25,19 +24,15 @@
 			"custom": {},
 			"mappings": [],
 			"thresholds": {
-			  "mode": "percentage",
+			  "mode": "absolute",
 			  "steps": [
 				{
 				  "color": "green",
 				  "value": null
 				},
 				{
-				  "color": "#EAB839",
-				  "value": 70
-				},
-				{
 				  "color": "red",
-				  "value": 90
+				  "value": 80
 				}
 			  ]
 			}
@@ -45,12 +40,12 @@
 		  "overrides": []
 		},
 		"gridPos": {
-		  "h": 9,
-		  "w": 12,
-		  "x": 6,
+		  "h": 8,
+		  "w": 24,
+		  "x": 0,
 		  "y": 0
 		},
-		"id": 2,
+		"id": 4,
 		"options": {
 		  "reduceOptions": {
 			"calcs": [
@@ -65,7 +60,6 @@
 		"pluginVersion": "7.3.6",
 		"targets": [
 		  {
-			"alias": "Disk Usage",
 			"groupBy": [
 			  {
 				"params": [
@@ -95,7 +89,7 @@
 				},
 				{
 				  "params": [],
-				  "type": "last"
+				  "type": "mean"
 				}
 			  ]
 			],
@@ -110,8 +104,7 @@
 		],
 		"timeFrom": null,
 		"timeShift": null,
-		"title": "Disk Usage %",
-		"transparent": true,
+		"title": "Nginx Disk Used %",
 		"type": "gauge"
 	  },
 	  {
@@ -129,21 +122,21 @@
 		"fill": 1,
 		"fillGradient": 0,
 		"gridPos": {
-		  "h": 8,
+		  "h": 9,
 		  "w": 24,
 		  "x": 0,
-		  "y": 9
+		  "y": 8
 		},
 		"hiddenSeries": false,
-		"id": 4,
+		"id": 2,
 		"legend": {
-		  "avg": true,
+		  "avg": false,
 		  "current": false,
 		  "max": false,
 		  "min": false,
 		  "show": true,
 		  "total": false,
-		  "values": true
+		  "values": false
 		},
 		"lines": true,
 		"linewidth": 1,
@@ -162,7 +155,6 @@
 		"steppedLine": false,
 		"targets": [
 		  {
-			"alias": "CPU Usage",
 			"groupBy": [
 			  {
 				"params": [
@@ -209,13 +201,12 @@
 		"timeFrom": null,
 		"timeRegions": [],
 		"timeShift": null,
-		"title": "CPU Usage %",
+		"title": "Nginx CPU Graph",
 		"tooltip": {
 		  "shared": true,
 		  "sort": 0,
 		  "value_type": "individual"
 		},
-		"transparent": true,
 		"type": "graph",
 		"xaxis": {
 		  "buckets": null,
@@ -260,7 +251,7 @@
 	},
 	"timepicker": {},
 	"timezone": "",
-	"title": "nginx",
-	"uid": "tnoUBxxGk",
-	"version": 3
+	"title": "Nginx",
+	"uid": "jjjTFFEMz",
+	"version": 1
   }
