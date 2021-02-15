@@ -15,16 +15,25 @@ else
 	export	MinikubeIP="$(kubectl get node -o=custom-columns='DATA:status.addresses[0].address' | sed -n 2p)"
 fi
 
-# Add MinikubeIP in metalLB yaml file and ftps setup file
+# Add MinikubeIP in metalLB yaml file, ftps setup file and nginx config file
 cat srcs/metalLB.yaml.example > srcs/metalLB.yaml 
 echo "      - $MinikubeIP-$MinikubeIP" >> srcs/metalLB.yaml
 cat srcs/ftps/srcs/start_ftps.sh.example > srcs/ftps/srcs/start_ftps.sh
 echo "vsftpd -opasv_min_port=21000 -opasv_max_port=21010 -opasv_address=$MinikubeIP /etc/vsftpd/vsftpd.conf" >> srcs/ftps/srcs/start_ftps.sh
+cat srcs/nginx/srcs/nginx.conf.example > srcs/nginx/srcs/nginx.conf
+echo "\t\tlocation /phpmyadmin {" >> srcs/nginx/srcs/nginx.conf
+echo "\t\tproxy_pass          http://"$MinikubeIP":5000/;" >> srcs/nginx/srcs/nginx.conf
+echo "\t\tproxy_set_header    Host \$host;" >> srcs/nginx/srcs/nginx.conf
+echo "\t\tproxy_set_header    X-Real-IP \$remote_addr;" >> srcs/nginx/srcs/nginx.conf
+echo "\t\tproxy_set_header    X-Forwarded-For \$proxy_add_x_forwarded_for;" >> srcs/nginx/srcs/nginx.conf
+echo "\t\tproxy_set_header    X-Forwarded-Proto \$scheme;" >> srcs/nginx/srcs/nginx.conf
+echo "\t\tproxy_redirect      /index.php  /phpmyadmin/index.php;" >> srcs/nginx/srcs/nginx.conf
+echo "\t\t}" >> srcs/nginx/srcs/nginx.conf
+echo "\t}" >> srcs/nginx/srcs/nginx.conf
+echo "}" >> srcs/nginx/srcs/nginx.conf
 
 # Use the docker daemon from minikube
 eval $(minikube docker-env)
-
-sh srcs/nginx/srcs/nginx.sh
 
 # Build images
 docker build -t my_nginx srcs/nginx
@@ -51,16 +60,3 @@ kubectl apply -f srcs/phpmyadmin.yaml
 kubectl apply -f srcs/ftps.yaml
 kubectl apply -f srcs/influxdb.yaml
 kubectl apply -f srcs/grafana.yaml
-
-# function clear {
-# 	# Clear modified files
-# 	echo "Clear metalLB.yaml"
-# 	rm srcs/metalLB.yaml
-# 	echo "Clear start_ftps.sh"
-# 	rm srcs/ftps/srcs/start_ftps.sh
-# }
-
-# # $arguments
-# if [ $1 == "clear" ]; then
-# 	clear;
-# fi

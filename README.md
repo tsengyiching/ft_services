@@ -2,7 +2,14 @@
 
 References:
 - MetalLB : https://metallb.universe.tf/configuration/
+
 - Wordpress & Mysql : http://pwittrock.github.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/
+
+- wp-config: https://kinsta.com/blog/wp-config-php/
+
+- what is wp-cli : https://pagely.com/blog/what-is-wp-cli/
+
+- wp-cli : https://wp-cli.org/
 
 - Telegraf : https://docs.influxdata.com/telegraf/v1.17/introduction/getting-started/
 
