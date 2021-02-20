@@ -3,6 +3,8 @@
 References:
 - MetalLB : https://metallb.universe.tf/configuration/
 
+- Nginx : https://www.tecmint.com/useful-nginx-command-examples/
+
 - Wordpress & Mysql : http://pwittrock.github.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/
 
 - wp-config: https://kinsta.com/blog/wp-config-php/

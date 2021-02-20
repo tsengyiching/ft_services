@@ -2,19 +2,13 @@ FROM alpine:3.12
 
 EXPOSE 80 443 22
 
-# Install Nginx package
+# Install Nginx packages
 RUN apk -U update --no-cache
 RUN apk add nginx --no-cache
 RUN apk add openssl --no-cache
 RUN apk add openssh --no-cache
-
-# Install Telegraf
 RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/v3.13/community
-
-# Create new user and group 'www' for nginx
 RUN adduser -D -g 'www' www
-
-# Create a directory for html files
 RUN mkdir /www
 RUN chown -R www:www /var/lib/nginx
 RUN chown -R www:www /www
@@ -30,7 +24,6 @@ RUN openssl genrsa -des3 -passout pass:1234 -out server.pass.key 2048 && \
 
 COPY ./srcs/telegraf.conf /etc/telegraf/
 COPY srcs/nginx.conf /etc/nginx/nginx.conf
-COPY srcs/index.html /www
 COPY srcs/start_nginx.sh /
 RUN chmod +x /start_nginx.sh
 RUN mkdir -p /run/nginx
