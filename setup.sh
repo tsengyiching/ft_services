@@ -84,7 +84,7 @@ eval $(minikube docker-env)
 # Build images
 echo "${GREEN}Build Docker Images ${WHITE}"
 echo "NGINX is buiding ..."
-docker build -t my_nginx srcs/nginx
+docker build -t my_nginx srcs/nginx > /dev/null 2>&1
 echo "MYSQL is buiding ..."
 docker build -t my_mysql srcs/mysql > /dev/null 2>&1
 echo "WORDPRESS is buiding ..."
