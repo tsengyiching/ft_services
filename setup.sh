@@ -1,18 +1,33 @@
 #!/bin/sh
 OS=`uname -s`
+if [ "$OS" == "Darwin" ]; then
+		RED='\033[1;31m'
+		GREEN='\033[1;32m'
+		YELLOW='\033[1;33m'
+		BLUE='\033[1;34m'
+		NC='\033[0m'
+else
+		RED='\e[0;31m'
+		GREEN='\e[0;32m'
+		YELLOW='\e[0;33m'
+		BLUE='\e[0;34m'
+fi
 # Start Minikube and get ip address
+echo "${GREEN}minikube start${NC}"
 if [ "$OS" == "Darwin" ]; then
 	minikube delete
 	minikube start --driver=hyperkit
-	minikube addons enable dashboard
-	minikube addons enable metrics-server
+	minikube addons enable dashboard > /dev/null 2>&1
+	minikube addons enable metrics-server > /dev/null 2>&1
 	export	MinikubeIP=$(minikube ip)
+	echo "${BLUE}Minikube IP${NC}= $MinikubeIP"
 else
 	minikube delete
 	minikube start --vm-driver=docker
-	minikube addons enable dashboard
-	minikube addons enable metrics-server
+	minikube addons enable dashboard > /dev/null 2>&1
+	minikube addons enable metrics-server > /dev/null 2>&1
 	export	MinikubeIP="$(kubectl get node -o=custom-columns='DATA:status.addresses[0].address' | sed -n 2p)"
+	echo "${BLUE}Minikube IP${NC}= $MinikubeIP"
 fi
 
 # Add MinikubeIP in metalLB yaml file, ftps setup file and nginx config file
@@ -31,6 +46,15 @@ echo "\t\tproxy_redirect      /index.php  /phpmyadmin/index.php;" >> srcs/nginx/
 echo "\t\t}" >> srcs/nginx/srcs/nginx.conf
 echo "\t}" >> srcs/nginx/srcs/nginx.conf
 echo "}" >> srcs/nginx/srcs/nginx.conf
+echo "wp core install --url=https://$MinikubeIP:5050 --title=plop --admin_user=stud42 --admin_password=stud42 --admin_email=stud42@plop.fr --path='/usr/share/webapps/wordpress/' --skip-email" >> srcs/wordpress/srcs/setup.sh
+echo "while [ \$? -ne 0 ] ; do" >> srcs/wordpress/srcs/setup.sh
+echo "    wp core install --url=https://$MinikubeIP:5050 --title=plop --admin_user=stud42 --admin_password=stud42 --admin_email=stud42@plop.fr --path='/usr/share/webapps/wordpress/' --skip-email" >> srcs/wordpress/srcs/setup.sh
+echo "done" >> srcs/wordpress/srcs/setup.sh
+echo "wp core install --url=https://$MinikubeIP:5050 --title=plop --admin_user=stud42 --admin_password=stud42 --admin_email=stud42@plop.fr --path='/usr/share/webapps/wordpress/' --skip-email" >> srcs/wordpress/srcs/setup.sh
+echo "wp user create test test@test.fr --first_name=test --last_name=test --user_pass=test --role=follower --path='/usr/share/webapps/wordpress/'" >> srcs/wordpress/srcs/setup.sh
+echo "wp user create test lami@lami.fr --first_name=lami --last_name=lami --user_pass=lami --role=lami --path='/usr/share/webapps/wordpress/'" >> srcs/wordpress/srcs/setup.sh
+echo "wp user create test skrrt@skrrt.fr --first_name=skrrt --last_name=skrrt --user_pass=skrrt --role=skrrt --path='/usr/share/webapps/wordpress/'" >> srcs/wordpress/srcs/setup.sh
+echo "(telegraf conf &) & php-fpm7 && nginx -g \"daemon off;\"" >> srcs/wordpress/srcs/setup.sh
 
 # Use the docker daemon from minikube
 eval $(minikube docker-env)
