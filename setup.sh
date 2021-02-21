@@ -67,7 +67,7 @@ echo "\t\tproxy_redirect      /index.php  /phpmyadmin/index.php;" >> srcs/nginx/
 echo "\t\t}" >> srcs/nginx/srcs/nginx.conf
 echo "\t}" >> srcs/nginx/srcs/nginx.conf
 echo "}" >> srcs/nginx/srcs/nginx.conf
-echo "wp core install --url=https://$MinikubeIP:5050 --title=plop --admin_user=stud42 --admin_password=stud42 --admin_email=stud42@plop.fr --path='usr/share/webapps/wordpress/' --skip-email" >> srcs/wordpress/srcs/setup.sh
+echo "wp core install --url=https://$MinikubeIP:5050 --title=plop --admin_user=stud42 --admin_password=stud42 --admin_email=stud42@plop.fr --path='usr/share/webapps/wordpress/' --skip-email" > srcs/wordpress/srcs/setup.sh
 echo "while [ \$? -ne 0 ] ; do" >> srcs/wordpress/srcs/setup.sh
 echo "    wp core install --url=https://$MinikubeIP:5050 --title=plop --admin_user=stud42 --admin_password=stud42 --admin_email=stud42@plop.fr --path='usr/share/webapps/wordpress/' --skip-email" >> srcs/wordpress/srcs/setup.sh
 echo "done" >> srcs/wordpress/srcs/setup.sh
