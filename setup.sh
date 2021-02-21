@@ -67,14 +67,14 @@ echo "\t\tproxy_redirect      /index.php  /phpmyadmin/index.php;" >> srcs/nginx/
 echo "\t\t}" >> srcs/nginx/srcs/nginx.conf
 echo "\t}" >> srcs/nginx/srcs/nginx.conf
 echo "}" >> srcs/nginx/srcs/nginx.conf
-echo "wp core install --url=https://$MinikubeIP:5050 --title=plop --admin_user=stud42 --admin_password=stud42 --admin_email=stud42@plop.fr --path='/usr/share/webapps/wordpress/' --skip-email" > srcs/wordpress/srcs/setup.sh
+echo "wp core install --url=https://$MinikubeIP:5050 --title=plop --admin_user=stud42 --admin_password=stud42 --admin_email=stud42@plop.fr --path='usr/share/webapps/wordpress/' --skip-email" >> srcs/wordpress/srcs/setup.sh
 echo "while [ \$? -ne 0 ] ; do" >> srcs/wordpress/srcs/setup.sh
-echo "    wp core install --url=https://$MinikubeIP:5050 --title=plop --admin_user=stud42 --admin_password=stud42 --admin_email=stud42@plop.fr --path='/usr/share/webapps/wordpress/' --skip-email" >> srcs/wordpress/srcs/setup.sh
+echo "    wp core install --url=https://$MinikubeIP:5050 --title=plop --admin_user=stud42 --admin_password=stud42 --admin_email=stud42@plop.fr --path='usr/share/webapps/wordpress/' --skip-email" >> srcs/wordpress/srcs/setup.sh
 echo "done" >> srcs/wordpress/srcs/setup.sh
-echo "wp core install --url=https://$MinikubeIP:5050 --title=plop --admin_user=stud42 --admin_password=stud42 --admin_email=stud42@plop.fr --path='/usr/share/webapps/wordpress/' --skip-email" >> srcs/wordpress/srcs/setup.sh
-echo "wp user create test test@test.fr --first_name=test --last_name=test --user_pass=test --role=follower --path='/usr/share/webapps/wordpress/'" >> srcs/wordpress/srcs/setup.sh
-echo "wp user create test lami@lami.fr --first_name=lami --last_name=lami --user_pass=lami --role=lami --path='/usr/share/webapps/wordpress/'" >> srcs/wordpress/srcs/setup.sh
-echo "wp user create test skrrt@skrrt.fr --first_name=skrrt --last_name=skrrt --user_pass=skrrt --role=skrrt --path='/usr/share/webapps/wordpress/'" >> srcs/wordpress/srcs/setup.sh
+echo "wp core install --url=https://$MinikubeIP:5050 --title=plop --admin_user=stud42 --admin_password=stud42 --admin_email=stud42@plop.fr --path='usr/share/webapps/wordpress/' --skip-email" >> srcs/wordpress/srcs/setup.sh
+echo "wp user create test test@test.fr --first_name=test --last_name=test --user_pass=test --allow-root --path='usr/share/webapps/wordpress/'" >> srcs/wordpress/srcs/setup.sh
+echo "wp user create lami lami@lami.fr --first_name=lami --last_name=lami --user_pass=lami --allow-root --path='usr/share/webapps/wordpress/'" >> srcs/wordpress/srcs/setup.sh
+echo "wp user create skrrt skrrt@skrrt.fr --first_name=skrrt --last_name=skrrt --user_pass=skrrt --allow-root --path='usr/share/webapps/wordpress/'" >> srcs/wordpress/srcs/setup.sh
 echo "(telegraf conf &) & php-fpm7 && nginx -g \"daemon off;\"" >> srcs/wordpress/srcs/setup.sh
 
 # Use the docker daemon from minikube
