@@ -1,20 +1,12 @@
 #!/bin/sh
 OS=`uname -s`
-# # Check Minikube installation
-# if [ "$OS" == "Darwin" ]; then
-# 	sysctl -a | grep -E --color 'machdep.cpu.features|VMX'
-# 	if [ $? -ne 0 ]; then
-# 		brew install minikube
-# 		curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64 \
-#  		&& chmod +x minikube
-# 		mv minikube /usr/local/bin
-# else
-# 	grep -E --color 'vmx|svm' /proc/cpuinfo
-# 	if [ $? -ne 0 ]; then
-# 		curl -Lo minikube https://github.com/kubernetes/minikube/releases/download/v1.13.1/minikube-linux-amd64
-#   		chmod +x minikube
-# 		echo "user42" | sudo -S mkdir -p /usr/local/bin/
-# 		echo "user42" | sudo -S install minikube /usr/local/bin/
+# Check Minikube installation
+# minikube version
+# if [ $? -ne 0 ]; then
+# 	curl -Lo minikube https://github.com/kubernetes/minikube/releases/download/v1.13.1/minikube-linux-amd64
+#  		chmod +x minikube
+# 	echo "user42" | sudo -S mkdir -p /usr/local/bin/
+# 	echo "user42" | sudo -S install minikube /usr/local/bin/
 # fi
 
 # Set Color
@@ -106,8 +98,8 @@ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manife
 # Create the MetalLB scret memberlist
 kubectl create secret generic -n metallb-system memberlist  --from-literal=secretkey="$(openssl rand -base64 128)"
 
-echo "${GREEN}Deploy Services${WHITE}"
 # Deploy services
+echo "${GREEN}Deploy Services${WHITE}"
 kubectl apply -f srcs/metalLB.yaml
 kubectl apply -f srcs/nginx.yaml
 kubectl apply -f srcs/mysql.yaml
@@ -116,3 +108,21 @@ kubectl apply -f srcs/phpmyadmin.yaml
 kubectl apply -f srcs/ftps.yaml
 kubectl apply -f srcs/influxdb.yaml
 kubectl apply -f srcs/grafana.yaml
+
+sleep 10
+
+# Display services
+echo "${BLUE}//////////////////////////////PODS///////////////////////////////${WHITE}"
+kubectl get pod
+echo "${BLUE}///////////////////////////DEPLOYMENTS//////////////////////////${WHITE}"
+kubectl get deployment
+echo "${BLUE}////////////////////////////SERVICES////////////////////////////${WHITE}"
+kubectl get svc
+
+##pkill commands
+#kubectl exec deploy/nginx -- pkill nginx
+#kubectl exec deploy/wordpress -- pkill nginx
+#kubectl exec deploy/phpmyadmin -- pkill nginx
+#kubectl exec deploy/grafana -- pkill grafana
+#kubectl exec deploy/ftps -- pkill vsftpd 
+#kubectl exec deploy/influxdb -- pkill influxd
