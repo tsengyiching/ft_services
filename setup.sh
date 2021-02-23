@@ -28,6 +28,7 @@ fi
 echo "${GREEN}Minikube Start${WHITE}"
 if [ "$OS" == "Darwin" ]; then
 	minikube delete
+	minikube addons enable dashboard
 	minikube start --driver=hyperkit
 	minikube addons enable metrics-server
 	export	MinikubeIP=$(minikube ip)
@@ -117,7 +118,7 @@ echo "${BLUE}///////////////////////////DEPLOYMENTS//////////////////////////${W
 kubectl get deployment
 echo "${BLUE}////////////////////////////SERVICES////////////////////////////${WHITE}"
 kubectl get svc
-
+#minikube dashboard
 ##pkill commands
 #kubectl exec deploy/nginx -- pkill nginx
 #kubectl exec deploy/wordpress -- pkill nginx
