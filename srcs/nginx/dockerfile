@@ -2,7 +2,6 @@ FROM alpine:3.12
 
 EXPOSE 80 443 22
 
-# Install Nginx packages
 RUN apk -U update --no-cache
 RUN apk add nginx --no-cache
 RUN apk add openssl --no-cache
@@ -14,7 +13,6 @@ RUN chown -R www:www /var/lib/nginx
 RUN chown -R www:www /www
 RUN ssh-keygen -A
 
-# Generate ssl certificate
 RUN openssl genrsa -des3 -passout pass:1234 -out server.pass.key 2048 && \
     openssl rsa -passin pass:1234 -in server.pass.key -out server.key && \
     rm server.pass.key && \

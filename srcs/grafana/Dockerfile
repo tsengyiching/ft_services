@@ -4,8 +4,6 @@ EXPOSE 3000
 
 RUN apk add --no-cache su-exec bash curl
 RUN apk add libc6-compat gcompat
-
-# Install Telegraf
 RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/v3.13/community
 
 COPY srcs/start_grafana.sh /bin/start_grafana.sh

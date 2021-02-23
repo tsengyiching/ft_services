@@ -23,14 +23,12 @@ RUN mkdir -p /usr/share/webapps/ && \
 	rm -f /usr/share/webapps/wordpress/wp-config.php && \
     cd ~
 
-# Generate ssl certificate
 RUN adduser -D -g www www
 RUN mkdir -p /run/nginx /www /etc/nginx/ssl
 RUN chown -R www:www /var/lib/nginx && chown -R www:www /www
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/default.key -out /etc/nginx/ssl/default.crt \
 -subj "/C=FR/ST=France/L=Lyon/O=42student/CN=localhost"
 
-# Install Telegraf
 RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/v3.13/community
 
 COPY srcs/setup.sh /

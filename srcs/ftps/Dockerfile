@@ -3,8 +3,6 @@ FROM alpine:3.12
 EXPOSE 21
 
 RUN apk add vsftpd openrc openssl
-
-# Install Telegraf
 RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/v3.13/community
 
 COPY srcs/start_ftps.sh /bin/start_ftps.sh

@@ -29,7 +29,6 @@ echo "${GREEN}Minikube Start${WHITE}"
 if [ "$OS" == "Darwin" ]; then
 	minikube delete
 	minikube start --driver=hyperkit
-	minikube addons enable dashboard
 	minikube addons enable metrics-server
 	export	MinikubeIP=$(minikube ip)
 	echo "${GREEN}Minikube IP = ${WHITE}$MinikubeIP"
@@ -126,3 +125,4 @@ kubectl get svc
 #kubectl exec deploy/grafana -- pkill grafana
 #kubectl exec deploy/ftps -- pkill vsftpd 
 #kubectl exec deploy/influxdb -- pkill influxd
+#kubectl exec deploy/mysql -- pkill mysqld
